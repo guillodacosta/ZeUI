@@ -9,8 +9,8 @@ import SwiftUI
 
 
 public struct ZCellData {
-    let content: String
-    let icon: UIImage
+    public let content: String
+    public let icon: UIImage
     
     public init(content: String, icon: UIImage) {
         self.content = content

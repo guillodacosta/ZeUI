@@ -8,8 +8,8 @@
 import SwiftUI
 
 public struct ZDetailRowView: View {
-    let leftLabel: Text
-    let rightLabel: Text
+    public let leftLabel: Text
+    public let rightLabel: Text
     
     public init(leftLabel: Text, rightLabel: Text) {
         self.leftLabel = leftLabel
@@ -21,7 +21,7 @@ public struct ZDetailRowView: View {
         self.rightLabel = Text(rightLabel)
     }
     
-    var body: some View {
+    public var body: some View {
         HStack {
             leftLabel
                 .font(.headline)

@@ -8,10 +8,10 @@
 import SwiftUI
 
 public struct ZErrorView: View {
-    let error: Error
-    let retryAction: () -> Void
+    public let error: Error
+    public let retryAction: () -> Void
     
-    var body: some View {
+    public var body: some View {
         VStack {
             Text("An Error Occured")
                 .font(.title)

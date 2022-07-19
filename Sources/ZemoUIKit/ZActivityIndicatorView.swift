@@ -9,11 +9,11 @@ import SwiftUI
 
 public struct ZActivityIndicatorView: UIViewRepresentable {
 
-    public func makeUIView(context: UIViewRepresentableContext<ActivityIndicatorView>) -> UIActivityIndicatorView {
+    public func makeUIView(context: UIViewRepresentableContext<ZActivityIndicatorView>) -> ZActivityIndicatorView {
         UIActivityIndicatorView(style: .large)
     }
 
-    public func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicatorView>) {
+    public func updateUIView(_ uiView: ZActivityIndicatorView, context: UIViewRepresentableContext<ZActivityIndicatorView>) {
         uiView.startAnimating()
     }
 }
