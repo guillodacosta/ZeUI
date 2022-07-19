@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ZErrorView: View {
+public struct ZErrorView: View {
     let error: Error
     let retryAction: () -> Void
     

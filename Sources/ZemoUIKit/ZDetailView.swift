@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct ZDetailRowView: View {
+public struct ZDetailRowView: View {
     let leftLabel: Text
     let rightLabel: Text
     
-    init(leftLabel: Text, rightLabel: Text) {
+    public init(leftLabel: Text, rightLabel: Text) {
         self.leftLabel = leftLabel
         self.rightLabel = rightLabel
     }
     
-    init(leftLabel: Text, rightLabel: LocalizedStringKey) {
+    public init(leftLabel: Text, rightLabel: LocalizedStringKey) {
         self.leftLabel = leftLabel
         self.rightLabel = Text(rightLabel)
     }
