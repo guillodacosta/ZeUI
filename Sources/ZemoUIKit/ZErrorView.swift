@@ -22,6 +22,11 @@ public struct ZErrorView: View {
             Button(action: retryAction, label: { Text("Retry").bold() })
         }
     }
+    
+    public init(error: Error, retryAction: @escaping () -> Void) {
+        self.error = error
+        self.retryAction = retryAction
+    }
 }
 
 #if DEBUG

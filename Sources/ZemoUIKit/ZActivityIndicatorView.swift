@@ -16,4 +16,6 @@ public struct ZActivityIndicatorView: UIViewRepresentable {
     public func updateUIView(_ uiView: ZActivityIndicatorView, context: UIViewRepresentableContext<ZActivityIndicatorView>) {
         uiView.startAnimating()
     }
+    
+    public init() {}
 }
