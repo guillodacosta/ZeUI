@@ -18,7 +18,7 @@ public struct ZCellData {
     }
 }
 
-public struct ZCell: View {
+public struct ZCellView: View {
     
     public let cellData: ZCellData
     @State private var isSelected: Bool
@@ -41,9 +41,9 @@ public struct ZCell: View {
 
 
 #if DEBUG
-struct ZCellData_Previews: PreviewProvider {
+struct ZCellView_Previews: PreviewProvider {
     static var previews: some View {
-        ZCell(cellData: ZCellData(content: "text lorem ipsum no sabemos unknown thoughs ", icon: UIImage(systemName: "scribble.variable")!))
+        ZCellView(cellData: ZCellData(content: "text lorem ipsum no sabemos unknown thoughs ", icon: UIImage(systemName: "scribble.variable")!))
     }
 }
 #endif
