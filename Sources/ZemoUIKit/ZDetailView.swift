@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Guillermo Diaz on 7/19/22.
 //
@@ -8,37 +8,55 @@
 import SwiftUI
 
 public struct ZDetailRowView: View {
-    public let leftLabel: Text
-    public let rightLabel: Text
+    var action: () -> Void
+    var isSelected: Bool
+    var title: String
     
-    public init(leftLabel: Text, rightLabel: Text) {
-        self.leftLabel = leftLabel
-        self.rightLabel = rightLabel
-    }
-    
-    public init(leftLabel: Text, rightLabel: LocalizedStringKey) {
-        self.leftLabel = leftLabel
-        self.rightLabel = Text(rightLabel)
+    public init(title: String, isSelected: Bool = false, action: @escaping () -> Void) {
+        self.action = action
+        self.isSelected = isSelected
+        self.title = title
     }
     
     public var body: some View {
-        HStack {
-            leftLabel
-                .font(.headline)
-            Spacer()
-            rightLabel
-                .font(.callout)
+        Button(action: self.action) {
+            HStack {
+                if self.isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                } else {
+                    Spacer(minLength: 18)
+                }
+                Text(self.title)
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.leading)
+                Image(systemName: "chevron.right")
+            }
+            .padding()
         }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
     }
 }
 
 #if DEBUG
 struct ZDetailRowView_Previews: PreviewProvider {
     static var previews: some View {
-        ZDetailRowView(leftLabel: Text("Post x"), rightLabel: Text("info"))
-            .previewLayout(.fixed(width: 375, height: 40))
+        VStack {
+            Text("Selected")
+            ZDetailRowView(title: "selected row", isSelected: true) {
+                print("title")
+            }
+            Text("Selected large")
+            ZDetailRowView(title: "selected large row with a large large giant large text", isSelected: true) {
+                print("title")
+            }
+            Text("Not selected")
+            ZDetailRowView(title: "not selected row") {
+                print("title")
+            }
+            Text("Not selected large")
+            ZDetailRowView(title: "not selected large row with a large large giant large text") {
+                print("title")
+            }
+        }
     }
 }
 #endif
