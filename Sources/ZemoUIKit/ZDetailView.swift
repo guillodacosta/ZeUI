@@ -9,21 +9,19 @@ import SwiftUI
 
 public struct ZDetailRowView: View {
     var action: () -> Void
-    @State private(set) var isEditing: Bool
-    @State private(set) var isSelected: Bool
+    @State private(set) var isEditing: Bool = false
+    @State private(set) var isSelected: Bool = false
     var title: String
     
     public init(title: String, action: @escaping () -> Void) {
         self.action = action
-        self.isEditing = false
-        self.isSelected = false
         self.title = title
         print("initializador ")
     }
     
     public func editingMode(isOn: Bool) -> ZDetailRowView {
         self.isEditing = isOn
-        print("editingMode ")
+        print("editingMode \(isOn)")
         return self
     }
     
