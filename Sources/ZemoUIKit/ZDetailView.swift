@@ -20,7 +20,7 @@ public struct ZDetailRowView: View {
         self.title = title
     }
     
-    func editingMode(isOn: Bool) -> ZDetailRowView {
+    public func editingMode(isOn: Bool) -> ZDetailRowView {
         self.isEditing = isOn
         return self
     }
@@ -33,10 +33,12 @@ public struct ZDetailRowView: View {
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "checkmark.circle")
             }).opacity(isEditing ? 1 : 0)
             Button(action: self.action) {
-                Text(self.title)
-                    .frame(maxWidth: .infinity)
-                    .multilineTextAlignment(.leading)
-                Image(systemName: "chevron.right")
+                HStack {
+                    Text(self.title)
+                        .frame(maxWidth: .infinity)
+                        .multilineTextAlignment(.leading)
+                    Image(systemName: "chevron.right")
+                }
             }
         }
         .padding()
