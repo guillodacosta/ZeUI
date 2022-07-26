@@ -12,19 +12,19 @@ public struct ZDetailRowView: View {
     private var selectionHandler: ((Bool) -> Void)?
     @Binding var isEditing: Bool
     @State private(set) var isSelected: Bool = false
-    @Binding var title: String
+    private let title: String
     
-    public init(title: Binding<String>, act: @escaping () -> Void) {
-        self.actionHandler = act
+    public init(title: String, _ actionHandler: @escaping () -> Void) {
+        self.actionHandler = actionHandler
+        self.title = title
         self._isEditing = .constant(false)
-        self._title = title
     }
     
-    public init(title: Binding<String>, showSelectOptions isEditing: Binding<Bool>, act: @escaping () -> Void, selectionHandler: ((Bool) -> Void)?) {
-        self.actionHandler = act
+    public init(title: String, showSelectOptions isEditing: Binding<Bool>, actionHandler: @escaping () -> Void, selectionHandler: ((Bool) -> Void)?) {
+        self.actionHandler = actionHandler
         self.selectionHandler = selectionHandler
+        self.title = title
         self._isEditing = isEditing
-        self._title = title
     }
     
     public var body: some View {
