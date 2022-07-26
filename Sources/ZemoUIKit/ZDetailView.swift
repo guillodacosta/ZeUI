@@ -8,21 +8,23 @@
 import SwiftUI
 
 public struct ZDetailRowView: View {
-    var action: () -> Void
-    @State private(set) var isEditing: Bool = false
+    private var actionHandler: () -> Void
+    private var selectionHandler: ((Bool) -> Void)?
+    @Binding var isEditing: Bool
     @State private(set) var isSelected: Bool = false
-    var title: String
+    @Binding var title: String
     
-    public init(title: String, action: @escaping () -> Void) {
-        self.action = action
-        self.title = title
-        print("initializador ")
+    init(title: Binding<String>, act: @escaping () -> Void) {
+        self.actionHandler = act
+        self._isEditing = .constant(false)
+        self._title = title
     }
     
-    public func editingMode(isOn: Bool) -> ZDetailRowView {
-        self.isEditing = isOn
-        print("editingMode \(isOn)")
-        return self
+    init(title: Binding<String>, showSelectOptions isEditing: Binding<Bool>, act: @escaping () -> Void, selectionHandler: ((Bool) -> Void)?) {
+        self.actionHandler = act
+        self.selectionHandler = selectionHandler
+        self._isEditing = isEditing
+        self._title = title
     }
     
     public var body: some View {
@@ -32,10 +34,13 @@ public struct ZDetailRowView: View {
         HStack {
             Button(action: {
                 isSelected = !isSelected
+                if let handler = selectionHandler {
+                    handler(isSelected)
+                }
             }, label: {
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "checkmark.circle")
-            }).opacity(isEditing ? 1 : 0)
-            Button(action: self.action) {
+            }).opacity($isEditing.wrappedValue ? 1 : 0)
+            Button(action: self.actionHandler) {
                 HStack {
                     Text(self.title)
                         .frame(maxWidth: .infinity)
@@ -57,24 +62,11 @@ extension Button {
 
 #if DEBUG
 struct ZDetailRowView_Previews: PreviewProvider {
+    
     static var previews: some View {
+        
         VStack {
-            Text("Editing").font(.title)
-            ZDetailRowView(title: "selected row") {
-                print("title")
-            }.editingMode(isOn: true)
-            Text("Editing large").font(.title)
-            ZDetailRowView(title: "selected large row with a large large giant large text") {
-                print("title")
-            }.editingMode(isOn: false)
-            Text("Not selected").font(.title)
-            ZDetailRowView(title: "not selected row") {
-                print("title")
-            }.editingMode(isOn: false)
-            Text("Not selected large").font(.title)
-            ZDetailRowView(title: "not selected large row with a large large giant large text") {
-                print("title")
-            }
+            
         }
     }
 }
