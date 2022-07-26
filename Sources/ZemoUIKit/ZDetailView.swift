@@ -9,30 +9,44 @@ import SwiftUI
 
 public struct ZDetailRowView: View {
     var action: () -> Void
-    var isSelected: Bool
+    @State private(set) var isEditing: Bool
+    @State private(set) var isSelected: Bool
     var title: String
     
-    public init(title: String, isSelected: Bool = false, action: @escaping () -> Void) {
+    public init(title: String, action: @escaping () -> Void) {
         self.action = action
-        self.isSelected = isSelected
+        self.isEditing = false
+        self.isSelected = false
         self.title = title
     }
     
+    func editingMode(isOn: Bool) -> ZDetailRowView {
+        self.isEditing = isOn
+        return self
+    }
+    
     public var body: some View {
-        Button(action: self.action) {
-            HStack {
-                if self.isSelected {
-                    Image(systemName: "checkmark.circle.fill")
-                } else {
-                    Spacer(minLength: 18)
-                }
+        HStack {
+            Button(action: {
+                isSelected = !isSelected
+            }, label: {
+                Image(systemName: isSelected ? "checkmark.circle.fill" : "checkmark.circle")
+            }).opacity(isEditing ? 1 : 0)
+            Button(action: self.action) {
                 Text(self.title)
                     .frame(maxWidth: .infinity)
                     .multilineTextAlignment(.leading)
                 Image(systemName: "chevron.right")
             }
-            .padding()
         }
+        .padding()
+    }
+}
+
+extension Button {
+    
+    @ViewBuilder public func isHidden(_ hidden: Bool) -> some View {
+        hidden ? AnyView(self).hidden() as! AnyView : AnyView(self)
     }
 }
 
@@ -40,19 +54,19 @@ public struct ZDetailRowView: View {
 struct ZDetailRowView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            Text("Selected")
-            ZDetailRowView(title: "selected row", isSelected: true) {
+            Text("Editing").font(.title)
+            ZDetailRowView(title: "selected row") {
                 print("title")
-            }
-            Text("Selected large")
-            ZDetailRowView(title: "selected large row with a large large giant large text", isSelected: true) {
+            }.editingMode(isOn: true)
+            Text("Editing large").font(.title)
+            ZDetailRowView(title: "selected large row with a large large giant large text") {
                 print("title")
-            }
-            Text("Not selected")
+            }.editingMode(isOn: false)
+            Text("Not selected").font(.title)
             ZDetailRowView(title: "not selected row") {
                 print("title")
-            }
-            Text("Not selected large")
+            }.editingMode(isOn: false)
+            Text("Not selected large").font(.title)
             ZDetailRowView(title: "not selected large row with a large large giant large text") {
                 print("title")
             }
