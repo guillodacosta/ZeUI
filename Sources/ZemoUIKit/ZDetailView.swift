@@ -18,10 +18,12 @@ public struct ZDetailRowView: View {
         self.isEditing = false
         self.isSelected = false
         self.title = title
+        print("initializador ")
     }
     
     public func editingMode(isOn: Bool) -> ZDetailRowView {
         self.isEditing = isOn
+        print("editingMode ")
         return self
     }
     
