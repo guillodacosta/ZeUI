@@ -26,6 +26,9 @@ public struct ZDetailRowView: View {
     }
     
     public var body: some View {
+        if #available(iOS 15.0, *) {
+            let _ = Self._printChanges()
+        }
         HStack {
             Button(action: {
                 isSelected = !isSelected
