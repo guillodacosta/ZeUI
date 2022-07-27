@@ -10,21 +10,21 @@ import SwiftUI
 public struct ZDetailRowView: View {
     private var actionHandler: () -> Void
     private var selectionHandler: ((Bool) -> Void)?
-    @State private(set) var isEditing: Bool = false
+    @Binding var isEditing: Bool
     @State private(set) var isSelected: Bool = false
     private let title: String
     
     public init(title: String, _ actionHandler: @escaping () -> Void) {
         self.actionHandler = actionHandler
         self.title = title
-        self.isEditing = false
+        self._isEditing = .constant(false)
     }
     
-    public init(title: String, showSelectOptions isEditing: Bool, actionHandler: @escaping () -> Void, selectionHandler: ((Bool) -> Void)?) {
+    public init(title: String, showSelectOptions isEditing: Binding<Bool>, actionHandler: @escaping () -> Void, selectionHandler: ((Bool) -> Void)?) {
         self.actionHandler = actionHandler
-        self.isEditing = isEditing
         self.selectionHandler = selectionHandler
         self.title = title
+        self._isEditing = isEditing
     }
     
     public var body: some View {
