@@ -35,13 +35,11 @@ public struct ZDetailRowView: View {
             }, label: {
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "checkmark.circle")
             }).opacity(editMode?.wrappedValue.isEditing == true ? 1 : 0)
+            Spacer()
             Button(action: self.actionHandler) {
-                HStack {
-                    Text(self.title)
-                        .frame(maxWidth: .infinity)
-                        .multilineTextAlignment(.leading)
-                    Image(systemName: "chevron.right")
-                }
+                Text(self.title)
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.leading)
             }
         }
         .padding()
