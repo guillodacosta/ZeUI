@@ -10,21 +10,19 @@ import SwiftUI
 public struct ZDetailRowView: View {
     private var actionHandler: () -> Void
     private var selectionHandler: ((Bool) -> Void)?
-    @Binding var isEditing: Bool
     @State private(set) var isSelected: Bool = false
     private let title: String
+    @Environment(\.editMode) var editMode
     
     public init(title: String, _ actionHandler: @escaping () -> Void) {
         self.actionHandler = actionHandler
         self.title = title
-        self._isEditing = .constant(false)
     }
     
-    public init(title: String, showSelectOptions isEditing: Binding<Bool>, actionHandler: @escaping () -> Void, selectionHandler: ((Bool) -> Void)?) {
+    public init(title: String, actionHandler: @escaping () -> Void, selectionHandler: ((Bool) -> Void)?) {
         self.actionHandler = actionHandler
         self.selectionHandler = selectionHandler
         self.title = title
-        self._isEditing = isEditing
     }
     
     public var body: some View {
@@ -39,7 +37,7 @@ public struct ZDetailRowView: View {
                 }
             }, label: {
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "checkmark.circle")
-            }).opacity($isEditing.wrappedValue ? 1 : 0)
+            }).opacity(editMode?.wrappedValue.isEditing == true ? 1 : 0)
             Button(action: self.actionHandler) {
                 HStack {
                     Text(self.title)
