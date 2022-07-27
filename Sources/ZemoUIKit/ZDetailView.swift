@@ -36,6 +36,7 @@ public struct ZDetailRowView: View {
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "checkmark.circle")
             }).opacity(editMode?.wrappedValue.isEditing == true ? 1 : 0)
             Spacer()
+                .opacity(editMode?.wrappedValue.isEditing == true ? 1 : 0)
             Button(action: self.actionHandler) {
                 Text(self.title)
                     .frame(maxWidth: .infinity)
