@@ -10,6 +10,7 @@ import SwiftUI
 public struct ZDetailRowView: View {
     private var actionHandler: () -> Void
     private var selectionHandler: ((Bool) -> Void)?
+    private let isFavorite: Bool
     @State private(set) var isSelected: Bool = false
     private let title: String
     @Environment(\.editMode) var editMode
@@ -17,26 +18,40 @@ public struct ZDetailRowView: View {
     public init(title: String, _ actionHandler: @escaping () -> Void) {
         self.actionHandler = actionHandler
         self.title = title
+        self.isFavorite = false
     }
     
     public init(title: String, actionHandler: @escaping () -> Void, selectionHandler: ((Bool) -> Void)?) {
         self.actionHandler = actionHandler
         self.selectionHandler = selectionHandler
         self.title = title
+        self.isFavorite = false
+    }
+    
+    public init(title: String, isFavorite: Bool, actionHandler: @escaping () -> Void, selectionHandler: ((Bool) -> Void)?) {
+        self.actionHandler = actionHandler
+        self.selectionHandler = selectionHandler
+        self.title = title
+        self.isFavorite = isFavorite
     }
     
     public var body: some View {
         HStack {
-            Button(action: {
-                isSelected = !isSelected
-                if let handler = selectionHandler {
-                    handler(isSelected)
-                }
-            }, label: {
-                Image(systemName: isSelected ? "checkmark.circle.fill" : "checkmark.circle")
-            }).opacity(editMode?.wrappedValue.isEditing == true ? 1 : 0)
+            if editMode?.wrappedValue.isEditing == true {
+                Button(action: {
+                    isSelected = !isSelected
+                    if let handler = selectionHandler {
+                        handler(isSelected)
+                    }
+                }, label: {
+                    Image(systemName: isSelected ? "checkmark.circle.fill" : "checkmark.circle")
+                })
+            } else {
+                Image(systemName: "star.fill")
+                    .opacity(isFavorite ? 1 : 0)
+                
+            }
             Spacer()
-                .opacity(editMode?.wrappedValue.isEditing == true ? 1 : 0)
             Button(action: self.actionHandler) {
                 Text(self.title)
                     .frame(maxWidth: .infinity)
