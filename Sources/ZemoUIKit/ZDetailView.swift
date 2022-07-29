@@ -13,12 +13,13 @@ public struct ZDetailRowView: View {
     private let isFavorite: Bool
     @State private(set) var isSelected: Bool = false
     private let title: String
-    @Environment(\.editMode) var editMode
+    @Binding var editMode: EditMode
     
     public init(title: String, _ actionHandler: @escaping () -> Void) {
         self.actionHandler = actionHandler
         self.title = title
         self.isFavorite = false
+        self._editMode = .constant(.inactive)
     }
     
     public init(title: String, actionHandler: @escaping () -> Void, selectionHandler: ((Bool) -> Void)?) {
@@ -26,18 +27,20 @@ public struct ZDetailRowView: View {
         self.selectionHandler = selectionHandler
         self.title = title
         self.isFavorite = false
+        self._editMode = .constant(.inactive)
     }
     
-    public init(title: String, isFavorite: Bool, actionHandler: @escaping () -> Void, selectionHandler: ((Bool) -> Void)?) {
+    public init(title: String, isEditing: Binding<EditMode>, isFavorite: Bool, actionHandler: @escaping () -> Void, selectionHandler: ((Bool) -> Void)?) {
         self.actionHandler = actionHandler
         self.selectionHandler = selectionHandler
         self.title = title
         self.isFavorite = isFavorite
+        self._editMode = isEditing
     }
     
     public var body: some View {
         HStack {
-            if editMode?.wrappedValue.isEditing == true {
+            if editMode.isEditing == true {
                 Button(action: {
                     isSelected = !isSelected
                     if let handler = selectionHandler {
@@ -49,7 +52,6 @@ public struct ZDetailRowView: View {
             } else {
                 Image(systemName: "star.fill")
                     .opacity(isFavorite ? 1 : 0)
-                
             }
             Spacer()
             Button(action: self.actionHandler) {
